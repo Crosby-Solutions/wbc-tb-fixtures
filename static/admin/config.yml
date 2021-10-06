@@ -121,6 +121,9 @@ collections:
     create: true
     identifier_field: round
     summary: "Div {{division}}, Rd {{round}}, {{day}}-{{month}}"
+    view_groups:
+      - label: Division
+        field: division
     fields:
       - { label: "Round", name: "round", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
