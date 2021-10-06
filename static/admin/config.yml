@@ -66,7 +66,7 @@ collections:
           label: "Sport",
           name: "sport",
           widget: "select",
-          options: ["tb", "ll", "il"]
+          options: ["Teeball", "Little League", "Intermediate League"]
         }
       - {
           label: "Division",
@@ -77,11 +77,31 @@ collections:
           value_field: "division",
           display_fields: ["division"]
         }
-      - { label: "Logo", name: "logo", widget: "image" }
-      - { label: "Primary Color", name: "color1", widget: "color" }
-      - { label: "Secondary Color", name: "color2", widget: "color" }
-      - { label: "Tertiary Color", name: "color3", widget: "color" }
-      - { label: "Manager Name", name: "managerName", widget: "string" }
+      - { label: "Logo", name: "logo", widget: "image", required: false }
+      - {
+          label: "Primary Color",
+          name: "color1",
+          widget: "color",
+          required: false
+        }
+      - {
+          label: "Secondary Color",
+          name: "color2",
+          widget: "color",
+          required: false
+        }
+      - {
+          label: "Tertiary Color",
+          name: "color3",
+          widget: "color",
+          required: false
+        }
+      - {
+          label: "Manager Name",
+          name: "managerName",
+          widget: "string",
+          required: false
+        }
   - name: "rounds"
     label: "Rounds"
     folder: "content/_rounds/"
