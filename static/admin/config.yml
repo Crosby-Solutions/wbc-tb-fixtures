@@ -3,7 +3,6 @@ backend:
   repo: Crosby-Solutions/wbc-tb-fixtures
   branch: master
 
-publish_mode: editorial_workflow
 media_folder: "static/media/uploads"
 site_url: https://wbc-tb-fixtures.netlify.app
 
