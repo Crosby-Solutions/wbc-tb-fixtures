@@ -55,7 +55,7 @@ collections:
       - { label: "Team", name: "team", widget: "string" }
       - {
           label: "Club",
-          name: "team",
+          name: "club",
           widget: "relation",
           collection: "clubs",
           search_fields: ["club"],
