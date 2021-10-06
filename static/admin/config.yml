@@ -162,7 +162,7 @@ collections:
           name: "teamHome",
           widget: "relation",
           collection: "teams",
-          search_fields: ["team", "club"],
+          search_fields: ["team", "club", "division_number"],
           value_field: "team",
           display_fields: ["division", "division_number", "club", "team"]
         }
@@ -171,7 +171,7 @@ collections:
           name: "teamAway",
           widget: "relation",
           collection: "teams",
-          search_fields: ["team", "club"],
+          search_fields: ["team", "club", "division_number"],
           value_field: "team",
           display_fields: ["division", "division_number", "club", "team"]
         }
