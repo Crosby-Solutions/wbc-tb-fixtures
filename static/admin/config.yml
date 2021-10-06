@@ -19,7 +19,8 @@ collections:
           label: "Sport",
           name: "sport",
           widget: "select",
-          options: ["Teeball", "Little League", "Intermediate League"]
+          options: ["Teeball", "Little League", "Intermediate League"],
+          default: "Teeball"
         }
       - {
           label: "Age",
@@ -33,14 +34,17 @@ collections:
     create: true
     identifier_field: club
     fields:
-      - { label: "Club", name: "club", widget: "string" }
+      - { label: "Club Short", name: "club", widget: "string" }
+      - { label: "Club Full"}, name: "club_full", widget: "string"}
       - {
           label: "Sport",
           name: "sport",
           widget: "select",
-          options: ["Teeball", "Little League", "Intermediate League"]
+          options: ["Teeball", "Little League", "Intermediate League"],
+          default: "Teeball"
         }
       - { label: "Logo", name: "logo", widget: "image" }
+      - { label: "Website", name: "website", widget: "string" }
       - { label: "Primary Color", name: "color1", widget: "color" }
       - { label: "Secondary Color", name: "color2", widget: "color" }
       - { label: "Tertiary Color", name: "color3", widget: "color" }
@@ -49,8 +53,10 @@ collections:
     label: "Teams"
     folder: "content/_teams/"
     create: true
+    slug: "{{division}}-{{division_number}}{{club}}-{{slug}}"
     identifier_field: team
     filter: { field: "sport", value: "Teeball" }
+    sortable_fields: ["division_number"]
     fields:
       - { label: "Team", name: "team", widget: "string" }
       - {
@@ -66,7 +72,8 @@ collections:
           label: "Sport",
           name: "sport",
           widget: "select",
-          options: ["Teeball", "Little League", "Intermediate League"]
+          options: ["Teeball", "Little League", "Intermediate League"],
+          default: "Teeball"
         }
       - {
           label: "Division",
@@ -77,6 +84,7 @@ collections:
           value_field: "division",
           display_fields: ["division"]
         }
+      - { label: "Division Number", name: "division_number", widget: "string" }
       - { label: "Logo", name: "logo", widget: "image", required: false }
       - {
           label: "Primary Color",
@@ -125,7 +133,6 @@ collections:
     create: true
     identifier_field: game
     fields:
-      - { label: "Game", name: "game", widget: "Number" }
       - {
           label: "Round",
           name: "round",
@@ -135,6 +142,8 @@ collections:
           value_field: "round",
           display_fields: ["round"]
         }
+      - { label: "Day", name: "day", widget: "String", default: "Saturday" }
+      - { label: "Time", name: "time", widget: "String", default: "8.30am" }
       - {
           label: "Home Team",
           name: "teamHome",

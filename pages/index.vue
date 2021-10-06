@@ -10,7 +10,7 @@
     <ul>
       <li>[x] Build content system</li>
       <li>[x] Deploy to Nelify</li>
-      <li>[ ] Set up access to admin</li>
+      <li>[x] Set up access to admin</li>
       <li>[ ] Input content</li>
       <li>[ ] Build display</li>
       <li>[ ] Hook up content query</li>
