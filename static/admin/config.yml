@@ -9,7 +9,7 @@ site_url: https://wbc-tb-fixtures.netlify.app
 collections:
   - name: "divisions"
     label: "Divisions"
-    folder: "_divisions"
+    folder: "_divisions/"
     create: true
     identifier_field: division
     filter: { field: "sport", value: "tb" }
@@ -29,7 +29,7 @@ collections:
         }
   - name: "clubs"
     label: "Clubs"
-    folder: "_clubs"
+    folder: "_clubs/"
     create: true
     identifier_field: club
     fields:
@@ -47,7 +47,7 @@ collections:
       - { label: "Venue", name: "venue", widget: "map" }
   - name: "teams"
     label: "Teams"
-    folder: "_teams"
+    folder: "_teams/"
     create: true
     identifier_field: team
     filter: { field: "sport", value: "tb" }
@@ -84,7 +84,7 @@ collections:
       - { label: "Manager Name", name: "managerName", widget: "string" }
   - name: "rounds"
     label: "Rounds"
-    folder: "_rounds"
+    folder: "_rounds/"
     create: true
     identifier_field: round
     fields:
@@ -102,7 +102,7 @@ collections:
         }
   - name: "games"
     label: "Games"
-    folder: "_games"
+    folder: "_games/"
     create: true
     identifier_field: game
     fields:
