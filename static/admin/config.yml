@@ -27,7 +27,7 @@ collections:
           label: "Age",
           name: "age",
           widget: "select",
-          options: ["8", "9", "10", "11", "12"]
+          options: [8, 9, 10, 11, 12]
         }
   - name: "clubs"
     label: "Clubs"
@@ -54,7 +54,7 @@ collections:
     label: "Teams"
     folder: "content/_teams/"
     create: true
-    slug: "{{division}}-{{division_number}}{{club}}-{{slug}}"
+    slug: "{{division}}-{{division_number}}-{{club}}-{{slug}}"
     identifier_field: team
     summary: "{{division}} [{{division_number}}] {{club}} {{team}}"
     filter: { field: "sport", value: "Teeball" }
@@ -89,7 +89,12 @@ collections:
           value_field: "division",
           display_fields: ["division"]
         }
-      - { label: "Division Number", name: "division_number", widget: "string" }
+      - {
+          label: "Division Number",
+          name: "division_number",
+          widget: "number",
+          value_type: "int"
+        }
       - { label: "Logo", name: "logo", widget: "image", required: false }
       - {
           label: "Primary Color",
@@ -120,12 +125,13 @@ collections:
     folder: "content/_rounds/"
     create: true
     identifier_field: round
+    slug: "Div-{{division}}-Rd-{{round}}"
     summary: "Div {{division}}, Rd {{round}}, {{day}}-{{month}}"
     view_groups:
       - label: Division
         field: division
     fields:
-      - { label: "Round", name: "round", widget: "string" }
+      - { label: "Round", name: "round", widget: "number", value_type: "int" }
       - { label: "Date", name: "date", widget: "datetime" }
       - {
           label: "Division",
@@ -141,11 +147,21 @@ collections:
     folder: "content/_games/"
     create: true
     identifier_field: game
-    summary: "{{round}} {{teamHome}} vs {{teamAway}}"
+    slug: "{{division}}-{{round}}-{{number_home}}-{{number_away}}"
+    summary: "{{division}} {{teamHome}} vs {{teamAway}}"
     view_groups:
       - label: Round
         field: round
     fields:
+      - {
+          label: "Division",
+          name: "division",
+          widget: "relation",
+          collection: "divisions",
+          search_fields: ["division", "age"],
+          value_field: "division",
+          display_fields: ["division"]
+        }
       - {
           label: "Round",
           name: "round",
@@ -175,4 +191,9 @@ collections:
           value_field: "team",
           display_fields: ["division", "division_number", "club", "team"]
         }
-      - { label: "Diamond", name: "diamond", widget: "number" }
+      - {
+          label: "Diamond",
+          name: "diamond",
+          widget: "number",
+          value_type: "int"
+        }
