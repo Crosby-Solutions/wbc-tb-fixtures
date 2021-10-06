@@ -35,7 +35,7 @@ collections:
     identifier_field: club
     fields:
       - { label: "Club Short", name: "club", widget: "string" }
-      - { label: "Club Full"}, name: "club_full", widget: "string"}
+      - { label: "Club Full", name: "club_full", widget: "string" }
       - {
           label: "Sport",
           name: "sport",
