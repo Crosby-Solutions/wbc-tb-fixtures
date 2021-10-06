@@ -52,12 +52,16 @@ collections:
   - name: "teams"
     label: "Teams"
     folder: "content/_teams/"
+    description: "{{club}}"
     create: true
     slug: "{{division}}-{{division_number}}{{club}}-{{slug}}"
     identifier_field: team
     display_fields: ["division", "division_number", "club", "team"]
     filter: { field: "sport", value: "Teeball" }
     sortable_fields: ["division", "division_number"]
+    view_groups:
+      - label: Division
+        field: division
     fields:
       - { label: "Team", name: "team", widget: "string" }
       - {
@@ -116,7 +120,7 @@ collections:
     folder: "content/_rounds/"
     create: true
     identifier_field: round
-    display_fields: ["round", "date"]
+    summary: "{{round}} {{day}}-{{month}}"]
     fields:
       - { label: "Round", name: "round", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
@@ -134,7 +138,10 @@ collections:
     folder: "content/_games/"
     create: true
     identifier_field: game
-    display_fields: ["round", "teamHome", "teamAway"]
+    summary: "{{round}} {{teamHome}} vs {{teamAway}}"
+    view_groups:
+      - label: Round
+        field: round
     fields:
       - {
           label: "Round",
