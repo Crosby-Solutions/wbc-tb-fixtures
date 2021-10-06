@@ -55,8 +55,9 @@ collections:
     create: true
     slug: "{{division}}-{{division_number}}{{club}}-{{slug}}"
     identifier_field: team
+    display_fields: ["division", "division_number", "club", "team"]
     filter: { field: "sport", value: "Teeball" }
-    sortable_fields: ["division_number"]
+    sortable_fields: ["division", "division_number"]
     fields:
       - { label: "Team", name: "team", widget: "string" }
       - {
