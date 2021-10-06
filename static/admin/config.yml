@@ -1,5 +1,6 @@
 backend:
   name: git-gateway
+  repo: Crosby-Solutions/wbc-tb-fixtures
   branch: master
 
 publish_mode: editorial_workflow
@@ -19,13 +20,13 @@ collections:
           label: "Sport",
           name: "sport",
           widget: "select",
-          options: ["tb", "ll", "il"]
+          options: ["Teeball", "Little League", "Intermediate League"]
         }
       - {
           label: "Age",
           name: "age",
           widget: "select",
-          options: [8, 9, 10, 11, 12]
+          options: ["8", "9", "10", "11", "12"]
         }
   - name: "clubs"
     label: "Clubs"
