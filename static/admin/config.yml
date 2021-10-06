@@ -1,140 +1,137 @@
 backend:
   name: git-gateway
   branch: master # Branch to update (optional; defaults to master)
-  publish_mode: editorial_workflow
-  media_folder: "static/media/uploads"
-  site_url: https://wbc-tb-fixtures.netlify.app
-  collections:
-    divisions:
-      label: "Divisions"
-      name: "divisions"
-      folder: "_divisions"
-      create: true
-      identifier_field: division
-      filter: { field: "sport", value: "tb" }
-      fields:
-        - { label: "Division", name: "division", widget: "string" }
-        - {
-            label: "Sport",
-            name: "sport",
-            widget: "select",
-            options: ["tb", "ll", "il"]
-          }
-        - {
-            label: "Age",
-            name: "age",
-            widget: "select",
-            options: [8, 9, 10, 11, 12]
-          }
-    clubs:
-      label: "Clubs"
-      name: "clubs"
-      folder: "_clubs"
-      create: true
-      identifier_field: club
-      fields:
-        - { label: "Club", name: "club", widget: "string" }
-        - {
-            label: "Sport",
-            name: "sport",
-            widget: "select",
-            options: ["tb", "ll"]
-          }
-        - { label: "Logo", name: "logo", widget: "image" }
-        - { label: "Primary Color", name: "color1", widget: "color" }
-        - { label: "Secondary Color", name: "color2", widget: "color" }
-        - { label: "Tertiary Color", name: "color3", widget: "color" }
-        - { label: "Venue", name: "venue", widget: "map" }
-    teams:
-      label: "Teams"
-      name: "teams"
-      folder: "_teams"
-      create: true
-      identifier_field: team
-      filter: { field: "sport", value: "tb" }
-      fields:
-        - { label: "Team", name: "team", widget: "string" }
-        - {
-            label: "Club",
-            name: "team",
-            widget: "relation",
-            collection: "clubs",
-            search_fields: ["club"],
-            value_field: "club",
-            display_fields: ["club"]
-          }
-        - {
-            label: "Sport",
-            name: "sport",
-            widget: "select",
-            options: ["tb", "ll"]
-          }
-        - {
-            label: "Division",
-            name: "division",
-            widget: "relation",
-            collection: "divisions",
-            search_fields: ["division", "age"],
-            value_field: "division",
-            display_fields: ["division"]
-          }
-        - { label: "Logo", name: "logo", widget: "image" }
-        - { label: "Primary Color", name: "color1", widget: "color" }
-        - { label: "Secondary Color", name: "color2", widget: "color" }
-        - { label: "Tertiary Color", name: "color3", widget: "color" }
-        - { label: "Manager Name", name: "managerName", widget: "string" }
-    rounds:
-      label: "Rounds"
-      name: "rounds"
-      folder: "_rounds"
-      create: true
-      identifier_field: round
-      fields:
-        - { label: "Round", name: "round", widget: "string" }
-        - { label: "Date", name: "date", widget: "date" }
-        - { label: "Time", name: "time", widget: "time" }
-        - {
-            label: "Division",
-            name: "division",
-            widget: "relation",
-            collection: "divisions",
-            search_fields: ["division", "age"],
-            value_field: "division",
-            display_fields: ["division"]
-          }
-    games:
-      label: "Games"
-      name: "games"
-      folder: "_games"
-      create: true
-      identifier_field: game
-      fields:
-        - { label: "Game", name: "game", widget: "Number" }
-        - {
-            label: "Round",
-            name: "round",
-            widget: "relation",
-            collection: "rounds",
-            search_fields: ["round", "date"],
-            value_field: "round",
-            display_fields: ["round"]
-          }
-        - {
-            label: "Home Team",
-            name: "teamHome",
-            widget: "relation",
-            collection: "teams",
-            search_fields: ["team", "club"],
-            value_field: "team",
-            display_fields: ["club", "team"]
-          }
-        - {
-            label: "Away Team",
-            name: "teamAway",
-            widget: "relation",
-            collection: "teams",
-            search_fields: ["team", "club"],
-            value_field: "team",
-            display_fields: ["club", "team"]
-          }
-        - { label: "Diamond", name: "diamond", widget: "number" }
+
+publish_mode: editorial_workflow
+media_folder: "static/media/uploads"
+site_url: https://wbc-tb-fixtures.netlify.app
+
+collections:
+  - name: "divisions"
+    label: "Divisions"
+    folder: "_divisions"
+    create: true
+    identifier_field: division
+    filter: { field: "sport", value: "tb" }
+    fields:
+      - { label: "Division", name: "division", widget: "string" }
+      - {
+          label: "Sport",
+          name: "sport",
+          widget: "select",
+          options: ["tb", "ll", "il"]
+        }
+      - {
+          label: "Age",
+          name: "age",
+          widget: "select",
+          options: [8, 9, 10, 11, 12]
+        }
+  - name: "clubs"
+    label: "Clubs"
+    folder: "_clubs"
+    create: true
+    identifier_field: club
+    fields:
+      - { label: "Club", name: "club", widget: "string" }
+      - {
+          label: "Sport",
+          name: "sport",
+          widget: "select",
+          options: ["tb", "ll"]
+        }
+      - { label: "Logo", name: "logo", widget: "image" }
+      - { label: "Primary Color", name: "color1", widget: "color" }
+      - { label: "Secondary Color", name: "color2", widget: "color" }
+      - { label: "Tertiary Color", name: "color3", widget: "color" }
+      - { label: "Venue", name: "venue", widget: "map" }
+  - name: "teams"
+    label: "Teams"
+    folder: "_teams"
+    create: true
+    identifier_field: team
+    filter: { field: "sport", value: "tb" }
+    fields:
+      - { label: "Team", name: "team", widget: "string" }
+      - {
+          label: "Club",
+          name: "team",
+          widget: "relation",
+          collection: "clubs",
+          search_fields: ["club"],
+          value_field: "club",
+          display_fields: ["club"]
+        }
+      - {
+          label: "Sport",
+          name: "sport",
+          widget: "select",
+          options: ["tb", "ll"]
+        }
+      - {
+          label: "Division",
+          name: "division",
+          widget: "relation",
+          collection: "divisions",
+          search_fields: ["division", "age"],
+          value_field: "division",
+          display_fields: ["division"]
+        }
+      - { label: "Logo", name: "logo", widget: "image" }
+      - { label: "Primary Color", name: "color1", widget: "color" }
+      - { label: "Secondary Color", name: "color2", widget: "color" }
+      - { label: "Tertiary Color", name: "color3", widget: "color" }
+      - { label: "Manager Name", name: "managerName", widget: "string" }
+  - name: "rounds"
+    label: "Rounds"
+    folder: "_rounds"
+    create: true
+    identifier_field: round
+    fields:
+      - { label: "Round", name: "round", widget: "string" }
+      - { label: "Date", name: "date", widget: "date" }
+      - { label: "Time", name: "time", widget: "time" }
+      - {
+          label: "Division",
+          name: "division",
+          widget: "relation",
+          collection: "divisions",
+          search_fields: ["division", "age"],
+          value_field: "division",
+          display_fields: ["division"]
+        }
+  - name: "games"
+    label: "Games"
+    folder: "_games"
+    create: true
+    identifier_field: game
+    fields:
+      - { label: "Game", name: "game", widget: "Number" }
+      - {
+          label: "Round",
+          name: "round",
+          widget: "relation",
+          collection: "rounds",
+          search_fields: ["round", "date"],
+          value_field: "round",
+          display_fields: ["round"]
+        }
+      - {
+          label: "Home Team",
+          name: "teamHome",
+          widget: "relation",
+          collection: "teams",
+          search_fields: ["team", "club"],
+          value_field: "team",
+          display_fields: ["club", "team"]
+        }
+      - {
+          label: "Away Team",
+          name: "teamAway",
+          widget: "relation",
+          collection: "teams",
+          search_fields: ["team", "club"],
+          value_field: "team",
+          display_fields: ["club", "team"]
+        }
+      - { label: "Diamond", name: "diamond", widget: "number" }
