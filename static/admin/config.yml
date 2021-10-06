@@ -13,6 +13,7 @@ collections:
     create: true
     identifier_field: division
     filter: { field: "sport", value: "Teeball" }
+    summary: "{{division}} {{sport}}"
     fields:
       - { label: "Division", name: "division", widget: "string" }
       - {
@@ -120,7 +121,7 @@ collections:
     folder: "content/_rounds/"
     create: true
     identifier_field: round
-    summary: "{{round}} {{day}}-{{month}}"]
+    summary: "{{division}} {{round}} {{day}}-{{month}}"
     fields:
       - { label: "Round", name: "round", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
