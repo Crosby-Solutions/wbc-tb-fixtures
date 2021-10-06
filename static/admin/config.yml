@@ -152,7 +152,7 @@ collections:
           collection: "teams",
           search_fields: ["team", "club"],
           value_field: "team",
-          display_fields: ["club", "team"]
+          display_fields: ["division", "division_number", "club", "team"]
         }
       - {
           label: "Away Team",
@@ -161,6 +161,6 @@ collections:
           collection: "teams",
           search_fields: ["team", "club"],
           value_field: "team",
-          display_fields: ["club", "team"]
+          display_fields: ["division", "division_number", "club", "team"]
         }
       - { label: "Diamond", name: "diamond", widget: "number" }
