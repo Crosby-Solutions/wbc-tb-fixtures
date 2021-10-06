@@ -2,7 +2,7 @@
 club: Melville
 club_full: Melville Mariners
 sport: Teeball
-logo: https://www.facebook.com/melvillemarinersteeballclub/photos/a.1429528670710675/1610526465944227/
+logo: http://www.melvillemarinersteeball.com.au/wp-content/uploads/2016/08/logo1.png
 website: https://www.melvillemarinersteeball.com.au/
 color1: "#003860"
 color2: "#9ba7ab"
