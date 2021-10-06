@@ -1,5 +1,6 @@
 <template>
   <div class="root">
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" />
     <h1 class="text-xl">
       WBC Tee-ball 2021-22 Fixtures
     </h1>
