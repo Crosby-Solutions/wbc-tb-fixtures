@@ -1,6 +1,7 @@
 ---
 team: Little Champs
-club: Yangebup Knights
+club: Yangebup
 sport: Teeball
 division: U8
+division_number: 8
 ---

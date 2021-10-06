@@ -1,6 +1,7 @@
 ---
 team: Yankees
-club: Yangebup Knights
+club: Yangebup
 sport: Teeball
 division: U8
+division_number: 10
 ---

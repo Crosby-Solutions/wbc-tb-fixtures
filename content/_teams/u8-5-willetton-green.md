@@ -1,6 +1,7 @@
 ---
 team: Green
-club: Willetton Baseball Club
+club: Willetton
 sport: Teeball
 division: U8
+division_number: 5
 ---

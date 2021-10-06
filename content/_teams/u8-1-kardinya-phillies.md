@@ -1,6 +1,7 @@
 ---
 team: Phillies
-club: Kardinya Red Sox
+club: Kardinya
 sport: Teeball
 division: U8
+division_number: 1
 ---
