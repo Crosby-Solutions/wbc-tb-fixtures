@@ -143,8 +143,8 @@ collections:
           value_field: "round",
           display_fields: ["round"]
         }
-      - { label: "Day", name: "day", widget: "String", default: "Saturday" }
-      - { label: "Time", name: "time", widget: "String", default: "8.30am" }
+      - { label: "Day", name: "day", widget: "string", default: "Saturday" }
+      - { label: "Time", name: "time", widget: "string", default: "8.30am" }
       - {
           label: "Home Team",
           name: "teamHome",
