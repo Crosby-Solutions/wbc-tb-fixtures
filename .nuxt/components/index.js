@@ -1,6 +1,7 @@
 export { default as NuxtLogo } from '../../components/NuxtLogo.vue'
 export { default as Tutorial } from '../../components/Tutorial.vue'
 export { default as Club } from '../../components/club.vue'
+export { default as Game } from '../../components/game.vue'
 
 // nuxt/nuxt.js#8607
 function wrapFunctional(options) {

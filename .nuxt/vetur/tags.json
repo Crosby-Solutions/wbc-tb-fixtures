@@ -7,5 +7,8 @@
   },
   "Club": {
     "description": "Auto imported from components/club.vue"
+  },
+  "Game": {
+    "description": "Auto imported from components/game.vue"
   }
 }

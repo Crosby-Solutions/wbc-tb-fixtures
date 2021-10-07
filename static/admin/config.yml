@@ -35,6 +35,7 @@ collections:
     create: true
     identifier_field: club
     fields:
+      - { name: club_id, label: UUID, widget: uuid }
       - { label: "Club Short", name: "club", widget: "string" }
       - { label: "Club Full", name: "club_full", widget: "string" }
       - {
@@ -63,6 +64,7 @@ collections:
       - label: Division
         field: division
     fields:
+      - { name: team_id, label: UUID, widget: uuid }
       - { label: "Team", name: "team", widget: "string" }
       - {
           label: "Club",
@@ -154,6 +156,7 @@ collections:
       - label: Round
         field: round
     fields:
+      - { name: game_id, label: UUID, widget: uuid }
       - {
           label: "Division",
           name: "division",
@@ -180,7 +183,7 @@ collections:
           widget: "relation",
           collection: "teams",
           search_fields: ["team", "club", "division_number"],
-          value_field: "team",
+          value_field: "team_id",
           display_fields: ["division", "division_number", "club", "team"]
         }
       - {
@@ -189,7 +192,7 @@ collections:
           widget: "relation",
           collection: "teams",
           search_fields: ["team", "club", "division_number"],
-          value_field: "team",
+          value_field: "team_id",
           display_fields: ["division", "division_number", "club", "team"]
         }
       - {
