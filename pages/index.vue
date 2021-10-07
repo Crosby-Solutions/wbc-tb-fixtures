@@ -11,7 +11,7 @@
       <li>[x] Build content system</li>
       <li>[x] Deploy to Nelify</li>
       <li>[x] Set up access to admin</li>
-      <li>[ ] Input content</li>
+      <li>[2/5] Input content</li>
       <li>[ ] Build display</li>
       <li>[ ] Hook up content query</li>
       <li>[ ] Build Filter UI</li>
@@ -27,22 +27,52 @@
       <li>[ ] Venue maps</li>
       <li>[ ] Diamond Overlays</li>
     </ul>
-    <p>Clubs: {{ clubs }}</p>
-    <p>Divisions: {{ divisions }}</p>
-    <p>Teams: {{ teams }}</p>
+    <Club
+      v-for="club in clubs"
+      :key="club.slug"
+      :club="club"
+    />
+    <p>
+      Divisions: {{ divisions.map(d => d.division) }}
+    </p>
+    <p>
+      Teams:
+    </p>
+    <ul>
+      <li
+        v-for="team in teams.map(t => t.slug)"
+        :key="team"
+      >
+        {{ team }}
+      </li>
+    </ul>
     <p>Rounds: {{ rounds }}</p>
     <p>Games: {{ games }}</p>
   </div>
 </template>
 
 <script>
+import Club from "@/components/club.vue"
 export default {
+  components: {
+    Club
+  },
    async asyncData({ $content }) {
-    const clubs = await $content("clubs").fetch();
-    const divisions = await $content("divisions").fetch();
-    const teams = await $content("teams").fetch();
-    const rounds = await $content("rounds").fetch();
-    const games = await $content("games").fetch();
+    const clubs = await $content("_clubs").fetch();
+    console.log('clubs: ', clubs)
+    const divisions = await $content("_divisions")
+      .sortBy('age', 'asc') // alphabetical sort
+      .fetch();
+    console.log('divisions: ', divisions)
+    const teams = await $content("_teams")
+      .sortBy('division', 'asc') // alphabetical sort
+      .sortBy('divisionNumber', 'asc') // alphabetical sort
+      .fetch();
+    console.log('teams: ', teams)
+    const rounds = await $content("_rounds").fetch();
+    console.log('rounds: ', rounds)
+    const games = await $content("_games").fetch();
+    console.log('games: ', games)
 
     return {
       clubs,
@@ -54,3 +84,8 @@ export default {
   },
 };
 </script>
+<style>
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+</style>

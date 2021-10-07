@@ -1,7 +1,7 @@
 ---
-team: Yellow
+team: Blazers
 club: Willetton
 sport: Teeball
 division: U9
-division_number: "7"
+division_number: 6
 ---

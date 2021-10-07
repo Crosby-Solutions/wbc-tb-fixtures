@@ -1,7 +1,7 @@
 ---
-team: Blazers
+team: Dodgers
 club: Willetton
 sport: Teeball
 division: U9
-division_number: "6"
+division_number: 8
 ---

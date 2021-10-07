@@ -3,5 +3,5 @@ team: Stingers
 club: Melville
 sport: Teeball
 division: U9
-division_number: "3"
+division_number: 3
 ---

@@ -8,3 +8,4 @@ You can directly use them in pages and other components without the need to impo
 
 - `<NuxtLogo>` | `<nuxt-logo>` (components/NuxtLogo.vue)
 - `<Tutorial>` | `<tutorial>` (components/Tutorial.vue)
+- `<Club>` | `<club>` (components/club.vue)

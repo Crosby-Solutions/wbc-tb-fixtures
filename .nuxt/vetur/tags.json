@@ -4,5 +4,8 @@
   },
   "Tutorial": {
     "description": "Auto imported from components/Tutorial.vue"
+  },
+  "Club": {
+    "description": "Auto imported from components/club.vue"
   }
 }
