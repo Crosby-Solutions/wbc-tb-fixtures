@@ -27,9 +27,30 @@
       <li>[ ] Venue maps</li>
       <li>[ ] Diamond Overlays</li>
     </ul>
+    <p>Clubs: {{ clubs }}</p>
+    <p>Divisions: {{ divisions }}</p>
+    <p>Teams: {{ teams }}</p>
+    <p>Rounds: {{ rounds }}</p>
+    <p>Games: {{ games }}</p>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+   async asyncData({ $content }) {
+    const clubs = await $content("clubs").fetch();
+    const divisions = await $content("divisions").fetch();
+    const teams = await $content("teams").fetch();
+    const rounds = await $content("rounds").fetch();
+    const games = await $content("games").fetch();
+
+    return {
+      clubs,
+      divisions,
+      teams,
+      rounds,
+      games
+    };
+  },
+};
 </script>

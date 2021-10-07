@@ -149,6 +149,7 @@ collections:
     identifier_field: game
     slug: "{{division}}-{{round}}-{{number_home}}-{{number_away}}"
     summary: "{{division}} {{teamHome}} vs {{teamAway}}"
+    sortable_fields: ["division", "round"]
     view_groups:
       - label: Round
         field: round
