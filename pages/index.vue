@@ -46,7 +46,7 @@
         {{ team }}
       </li>
     </ul>
-    <p>Rounds: {{ rounds }}</p>
+    <p>Rounds (Sorted): {{ roundsSorted.map(r => "Division " + r.division + " Round " + r.round + " ("+ r.date + ")") }}</p>
     <p>Games: {{ games }}</p>
   </div>
 </template>
@@ -66,10 +66,12 @@ export default {
     console.log('divisions: ', divisions)
     const teams = await $content("_teams")
       .sortBy('division', 'asc') // alphabetical sort
-      .sortBy('divisionNumber', 'asc') // alphabetical sort
+      .sortBy('division_number', 'asc') // alphabetical sort
       .fetch();
     console.log('teams: ', teams)
-    const rounds = await $content("_rounds").fetch();
+    const rounds = await $content("_rounds")
+      // needs manual sorting as division is alphabetical
+      .fetch();
     console.log('rounds: ', rounds)
     const games = await $content("_games").fetch();
     console.log('games: ', games)
@@ -82,10 +84,24 @@ export default {
       games
     };
   },
+  computed: {
+    roundsSorted() {
+      return [...this.rounds]
+        .sort((a, b) => {
+          const adiv = parseInt(a.division.slice(1))
+          const bdiv = parseInt(b.division.slice(1))
+          const ard = parseInt(a.round)
+          const brd = parseInt(b.round)
+          if (adiv > bdiv) return 1
+          else if (adiv < bdiv) return -1
+          else return (ard > brd) ? 1 : -1
+        })
+    }
+  }
 };
 </script>
 <style>
-  @tailwind base;
+  /* @tailwind base;
   @tailwind components;
-  @tailwind utilities;
+  @tailwind utilities; */
 </style>
