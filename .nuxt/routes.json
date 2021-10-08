@@ -1,12 +1,5 @@
 [
   {
-    "name": "adminmodule",
-    "path": "/adminmodule",
-    "component": "/home/jcrosby/projects/wbc-tb-fixtures/pages/adminmodule.vue",
-    "chunkName": "pages/adminmodule",
-    "_name": "_65201b4a"
-  },
-  {
     "name": "index",
     "path": "/",
     "component": "/home/jcrosby/projects/wbc-tb-fixtures/pages/index.vue",

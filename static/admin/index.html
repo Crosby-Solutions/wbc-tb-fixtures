@@ -10,10 +10,9 @@
 <body>
   <!-- Include the script that builds the page and powers Netlify CMS -->
   <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
-  <script src="https://unpkg.com/netlify-cms-widget-uuid@0.0.9/dist/netlify-cms-widget-uuid.js"></script>
+  <script src="https://unpkg.com/netlify-cms-widget-uuid-v4@^1.0.12/dist/index.js"></script>
   <script type="text/javascript">
-    console.log('CMS', CMS)
-    CMS.registerWidget('uuid', NetlifyCmsWidgetUuid.UuidControl, NetlifyCmsWidgetUuid.UuidPreview)
-  </script> 
+    CMS.registerWidget('uuid', uuidWidget.UuidControl, uuidWidget.UuidPreview)
+  </script>
 </body>
 </html>
