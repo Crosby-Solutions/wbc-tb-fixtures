@@ -2,8 +2,8 @@
 round: 08
 day: Saturday
 time: 8.30am
-teamHome: Green
-teamAway: Minions
+teamHome: ad3921cd-dbe5-4301-bbd0-39a721c99c51
+teamAway: ac5733a4-c60d-4538-b557-072a1787adfd
 diamond: 9
 division: U8
 ---

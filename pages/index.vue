@@ -74,7 +74,7 @@
         <!-- <button @click="selectRounds('Next')">
       Select Next
     </button> -->
-        <p>Selected Rounds: {{ selectedRounds }}</p>
+        <!-- <p>Selected Rounds: {{ selectedRounds }}</p> -->
       </div>
       <div class="select-divisions">
         <p>
@@ -94,9 +94,9 @@
             {{ div.label }}
           </option>
         </select>
-        <p>
+        <!-- <p>
           Selected Divisions: {{ selectedDivisions }}
-        </p>
+        </p> -->
       </div>
       <div class="select-teams">
         <p>Select Teams</p>
@@ -114,7 +114,15 @@
             {{ team.label }}
           </option>
         </select>
-        <p>Selected Teams: {{ selectedTeams }}</p>
+        <br>
+        NOT YET IMPLEMENTED
+        <button @click="selectRounds('All')">
+          All Willetton Teams
+        </button>
+        <button @click="selectRounds('All')">
+          All Games At Willetton
+        </button>
+        <!-- <p>Selected Teams: {{ selectedTeams }}</p> -->
       </div>
     </div>
     <div
@@ -126,6 +134,8 @@
         v-for="game in listGames"
         :key="game.slug"
         :game="game"
+        :home="getTeamFromID(game.teamHome)"
+        :away="getTeamFromID(game.teamAway)"
       />
     </div>
   </div>
@@ -202,7 +212,7 @@ export default {
       .map(t => {
         return {
           label: t.club + " " + t.team,
-          value: t.team
+          value: t.team_id
         }
         // todo: change value above to team uuid
       })
@@ -228,6 +238,9 @@ export default {
     }
   },
   methods: {
+    getTeamFromID(id) {
+      return this.teams.find(t => t.team_id === id)
+    },
     selectRounds(input) {
       console.log('input: ', input)
       let selection

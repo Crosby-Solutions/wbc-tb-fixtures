@@ -10,11 +10,23 @@
     </div>
     <div class="lineup flex flex-row justify-around">
       <div class="homeTeam p-4">
-        {{ game.teamHome }}
+        <span class="text-base">
+          {{ home.club }}
+        </span>
+        <br>
+        <span class="text-2xl">
+          {{ home.team }}
+        </span>
       </div> <div class="versus p-4">
         vs
       </div><div class="awayTeam p-4">
-        {{ game.teamAway }}
+        <span class="text-base">
+          {{ away.club }}
+        </span>
+        <br>
+        <span class="text-2xl">
+          {{ away.team }}
+        </span>
       </div>
     </div>
     <div class="footline flex flex-row justify-between">
@@ -34,6 +46,14 @@
 export default {
   props: {
     game: {
+      required: true,
+      type: Object
+    },
+    home: {
+      required: true,
+      type: Object,
+    },
+    away: {
       required: true,
       type: Object
     }
