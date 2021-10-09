@@ -1,12 +1,12 @@
 <template>
   <div class="root">
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" />
-    <h1 class="text-xl">
+    <h1 class="text-2xl">
       WBC Tee-ball 2021-22 Fixtures
     </h1>
 
     <h2>Filter Options:</h2>
-    <div class="selections flex flex-row justify-center gap-4">
+    <div class="selections mx-auto flex flex-row justify-center gap-4 border-2 rounded-md bg-gray-50">
       <div class="select-rounds">
         <p>Select Rounds</p>
         <select
@@ -22,17 +22,15 @@
           >
             {{ round.label }}
           </option>
-        </select><br>
-        <button @click="selectRounds('All')">
-          Select All
-        </button>
-        <button @click="selectRounds('None')">
-          Select None
-        </button>
-        <!-- <button @click="selectRounds('Next')">
-      Select Next
-    </button> -->
-        <!-- <p>Selected Rounds: {{ selectedRounds }}</p> -->
+        </select>
+        <div class="selectOptions">
+          <button @click="selectRounds('All')">
+            Select All
+          </button>
+          <button @click="selectRounds('None')">
+            Select None
+          </button>
+        </div>
       </div>
       <div class="select-divisions">
         <p>
@@ -72,32 +70,35 @@
             {{ team.label }}
           </option>
         </select>
-        <br>
-        <p>Select a club:</p>
-        <select v-model="selectedClub">
-          <option
-            v-for="club in listClubs"
-            :key="club.value"
-            :value="club.value"
+        <div class="selectOptions">
+          <p>
+            Select a club:
+
+            <select v-model="selectedClub">
+              <option
+                v-for="club in listClubs"
+                :key="club.value"
+                :value="club.value"
+              >
+                {{ club.label }}
+              </option>
+            </select>
+          </p>
+          <div
+            v-if="selectedClub"
+            class="buttons"
           >
-            {{ club.label }}
-          </option>
-        </select><br>
-        <div
-          v-if="selectedClub"
-          class="buttons"
-        >
-          <button @click="selectTeams(selectedClub)">
-            Select All {{ selectedClub }} Teams
-          </button><br>
-          <input
-            id="homeGames"
-            v-model="showOnlyHomeGames"
-            type="checkbox"
-          >
-          <label for="homeGames">Show Only Home Games</label>
+            <button @click="selectTeams(selectedClub)">
+              Select All {{ selectedClub }} Teams
+            </button><br>
+            <input
+              id="homeGames"
+              v-model="showOnlyHomeGames"
+              type="checkbox"
+            >
+            <label for="homeGames">Show Only Home Games</label>
+          </div>
         </div>
-        <!-- <p>Selected Teams: {{ selectedTeams }}</p> -->
       </div>
     </div>
 
@@ -165,6 +166,7 @@
           <tr
             v-for="game in listGames"
             :key="game.game_id"
+            :class="{'shade-row': game.round%2==1 }"
           >
             <td>{{ game.round }}</td>
             <td>{{ game.division }}</td>
@@ -276,7 +278,8 @@ export default {
         .filter(g => this.selectedDivisions.includes(g.division)) // from the selected divisions
         .filter(g => this.selectedTeams.includes(g.teamHome) || (!this.showOnlyHomeGames && this.selectedTeams.includes(g.teamAway))) // from the selected teams
         .filter(g => this.selectedRounds.length && this.selectedRounds.includes(g.round)) // from the selected rounds
-        .sort((a, b) => a.diamond < b.diamond ? 1 : -1) // sorted by diamond
+        .sort((a, b) => a.diamond > b.diamond ? 1 : -1) // sorted by diamond
+        .sort((a, b) => a.day < b.day ? 1 : -1) // sorted by day
         .sort((a, b) => a.round > b.round ? 1 : -1) // sorted by round
     },
     roundsSorted() {
@@ -343,10 +346,18 @@ export default {
   /* @tailwind base;
   @tailwind components;
   @tailwind utilities; */
-
+.select-rounds,
+.select-divisions,
+.select-teams {
+  @apply bg-green-100 p-4 border border-green-800;
+}
   button {
-    @apply border p-2;
+    @apply border p-2 bg-white my-2;
   }
+  input, select {
+    @apply p-2;
+  }
+
   #teamSelect {
     width: 300px;
   }
@@ -356,7 +367,9 @@ export default {
   #roundSelect {
     width: 200px;
   }
-
+.selectOptions {
+  @apply py-4 mx-auto text-center;
+}
   th, td {
     text-align: left;
     padding: 2px 1rem;
@@ -374,5 +387,12 @@ export default {
   th:nth-of-type(6), td:nth-of-type(7),
   th:nth-of-type(6), td:nth-of-type(7) {
     width: 325px
+  }
+
+  th {
+    @apply bg-green-200;
+  }
+  .shade-row {
+    @apply bg-green-50;
   }
 </style>
