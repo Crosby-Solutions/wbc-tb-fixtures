@@ -113,6 +113,7 @@ export default {
 .text-overlay {
   z-index: 1;
   text-align: center;
+  max-width: 200px;
   @apply w-full h-full;
 }
 .logo-background {

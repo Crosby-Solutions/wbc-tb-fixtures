@@ -6,7 +6,7 @@
     </h1>
 
     <h2>Filter Options:</h2>
-    <div class="selections flex flex-row w-full justify-evenly">
+    <div class="selections flex flex-row justify-center gap-4">
       <div class="select-rounds">
         <p>Select Rounds</p>
         <select
@@ -54,7 +54,7 @@
         </select>
         <!-- <p>
           Selected Divisions: {{ selectedDivisions }}
-        </p> -->
+        </p> --> <br>
       </div>
       <div class="select-teams">
         <p>Select Teams</p>
@@ -73,13 +73,30 @@
           </option>
         </select>
         <br>
-        <button @click="selectTeams('Willetton')">
-          All Willetton Teams
-        </button><br>
-        NOT YET IMPLEMENTED
-        <button @click="selectRounds('All')">
-          All Games At Willetton
-        </button>
+        <p>Select a club:</p>
+        <select v-model="selectedClub">
+          <option
+            v-for="club in listClubs"
+            :key="club.value"
+            :value="club.value"
+          >
+            {{ club.label }}
+          </option>
+        </select><br>
+        <div
+          v-if="selectedClub"
+          class="buttons"
+        >
+          <button @click="selectTeams(selectedClub)">
+            Select All {{ selectedClub }} Teams
+          </button><br>
+          <input
+            id="homeGames"
+            v-model="showOnlyHomeGames"
+            type="checkbox"
+          >
+          <label for="homeGames">Show Only Home Games</label>
+        </div>
         <!-- <p>Selected Teams: {{ selectedTeams }}</p> -->
       </div>
     </div>
@@ -151,7 +168,7 @@
           >
             <td>{{ game.round }}</td>
             <td>{{ game.division }}</td>
-            <td>{{ getDateFromRound(game.round) }}</td>
+            <td>{{ getDateFromRound(game.round, game.day) }}</td>
             <td>{{ game.day }}</td>
             <td>{{ game.time }}</td>
             <td>{{ getTeamFromID(game.teamHome).club }} {{ getTeamFromID(game.teamHome).team }}</td>
@@ -205,6 +222,8 @@ export default {
       selectedRounds: [],
       selectedDivisions: ["U8", "U9", "U10", "U11", "U12"],
       selectedTeams: [],
+      selectedClub: 'Willetton',
+      showOnlyHomeGames: false,
       displayAs: 'cards',
       displayOptions: [{ display: 'Cards', value: 'cards'}, {display: 'Table', value: 'table'}],
       tableHeadings: ['Round', 'Division', 'Date', 'Day', 'Time', 'Home', 'Away', 'Diamond']
@@ -221,14 +240,22 @@ export default {
           }
         })
     },
-      listDivisions() {
-        return this.divisions.map(div => {
-          return {
-            label: div.division,
-            value: div.division
-          }
-        })
-      },
+    listDivisions() {
+      return this.divisions.map(div => {
+        return {
+          label: div.division,
+          value: div.division
+        }
+      })
+    },
+    listClubs() {
+      return this.clubs.map(club => {
+        return {
+          label: club.club,
+          value: club.club
+        }
+      })
+    },
     listTeams() {
       return [...this.teams]
         .filter(t => this.selectedDivisions.includes(t.division))
@@ -247,8 +274,9 @@ export default {
     listGames() {
       return this.games
         .filter(g => this.selectedDivisions.includes(g.division)) // from the selected divisions
-        .filter(g => this.selectedTeams.includes(g.teamHome) || this.selectedTeams.includes(g.teamAway)) // from the selected teams
+        .filter(g => this.selectedTeams.includes(g.teamHome) || (!this.showOnlyHomeGames && this.selectedTeams.includes(g.teamAway))) // from the selected teams
         .filter(g => this.selectedRounds.length && this.selectedRounds.includes(g.round)) // from the selected rounds
+        .sort((a, b) => a.diamond < b.diamond ? 1 : -1) // sorted by diamond
         .sort((a, b) => a.round > b.round ? 1 : -1) // sorted by round
     },
     roundsSorted() {
@@ -265,10 +293,9 @@ export default {
     }
   },
   methods: {
-    getDateFromRound(round) {
+    getDateFromRound(round, day) {
       const date = new Date(this.rounds.find(r => r.round === round).date)
-      console.log('date: ', date)
-      return date.getDate() + "-" + (+date.getMonth()+1) + "-" + date.getFullYear()
+      return (+date.getDate() + ((day==='Friday') ? -1 : 0)) + "-" + (+date.getMonth()+1) + "-" + date.getFullYear()
     },
     getTeamFromID(id) {
       return this.teams.find(t => t.team_id === id)
@@ -332,6 +359,7 @@ export default {
 
   th, td {
     text-align: left;
+    padding: 2px 1rem;
   }
   th:nth-of-type(1), td:nth-of-type(1),
   th:nth-of-type(2), td:nth-of-type(2),
@@ -339,8 +367,12 @@ export default {
     text-align: center;
   }
   
-  th:nth-of-type(5), td:nth-of-type(6),
-  th:nth-of-type(5), td:nth-of-type(6) {
-    width: 300px
+  th:nth-of-type(3), td:nth-of-type(3) {
+    text-align: right;
+  }
+
+  th:nth-of-type(6), td:nth-of-type(7),
+  th:nth-of-type(6), td:nth-of-type(7) {
+    width: 325px
   }
 </style>
