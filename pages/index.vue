@@ -115,10 +115,10 @@
           </option>
         </select>
         <br>
-        NOT YET IMPLEMENTED
-        <button @click="selectRounds('All')">
+        <button @click="selectTeams('Willetton')">
           All Willetton Teams
         </button>
+        NOT YET IMPLEMENTED
         <button @click="selectRounds('All')">
           All Games At Willetton
         </button>
@@ -136,6 +136,8 @@
         :game="game"
         :home="getTeamFromID(game.teamHome)"
         :away="getTeamFromID(game.teamAway)"
+        :club-home="getClubFromTeamID(game.teamHome)"
+        :club-away="getClubFromTeamID(game.teamAway)"
       />
     </div>
   </div>
@@ -188,7 +190,6 @@ export default {
   },
   computed: {
     listRounds() {
-      console.log(this.rounds.map(r => r.round + r.division))
       return this.rounds
         .filter(r => r.division == "U8") // just use one set of rounds
         .map(r => {
@@ -217,17 +218,16 @@ export default {
           }
           })
         .sort((a, b) => {
-          console.log(a.label, b.label)
           return (a.label > b.label) ? 1 : -1
         })
         
     },
     listGames() {
       return this.games
-        .filter(g => this.selectedDivisions.includes(g.division))
-        .filter(g => this.selectedTeams.includes(g.teamHome) || this.selectedTeams.includes(g.teamAway))
-        // todo change above to use team uuid instead of team name
-        .filter(g => this.selectedRounds.length && this.selectedRounds.includes(g.round))
+        .filter(g => this.selectedDivisions.includes(g.division)) // from the selected divisions
+        .filter(g => this.selectedTeams.includes(g.teamHome) || this.selectedTeams.includes(g.teamAway)) // from the selected teams
+        .filter(g => this.selectedRounds.length && this.selectedRounds.includes(g.round)) // from the selected rounds
+        .sort((a, b) => a.round > b.round ? 1 : -1) // sorted by round
     },
     roundsSorted() {
       return [...this.rounds]
@@ -246,16 +246,28 @@ export default {
     getTeamFromID(id) {
       return this.teams.find(t => t.team_id === id)
     },
+    getClubFromTeamID(id) {
+      const club = this.teams.find(t => t.team_id === id).club
+      const clubObj = this.clubs.find(c => c.club === club)
+      console.log('clubObj: ', clubObj)
+      return clubObj
+    },
+    selectTeams(input) {
+      // for selecting all teams by club
+      if (this.clubs.map(c => c.club).includes(input)) {
+        this.selectedTeams = [...this.teams
+          .filter(t => t.club === input)
+          .map(t => t.team_id)
+        ]
+      }
+    },
     selectRounds(input) {
-      console.log('input: ', input)
       let selection
       switch(input) {
         case 'All':
-          console.log('test all')
           selection = this.rounds
             .filter(r => r.division === 'U8')
             .map(r => r.round)
-          console.log('selection: ', selection)
           break;
         case 'None':
           selection = []
