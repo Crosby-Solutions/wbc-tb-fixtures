@@ -108,7 +108,7 @@
         >
           <option
             v-for="team in listTeams"
-            :key="team.label"
+            :key="team.value"
             :value="team.value"
           >
             {{ team.label }}
@@ -182,7 +182,7 @@ export default {
   data () {
     return {
       selectedRounds: [],
-      selectedDivisions: [],
+      selectedDivisions: ["U8", "U9", "U10", "U11", "U12"],
       selectedTeams: []
     }
   },
@@ -207,15 +207,20 @@ export default {
         })
       },
     listTeams() {
-      return this.teams
-      .filter(t => this.selectedDivisions.includes(t.division))
-      .map(t => {
-        return {
-          label: t.club + " " + t.team,
-          value: t.team_id
-        }
-        // todo: change value above to team uuid
-      })
+      return [...this.teams]
+        .filter(t => this.selectedDivisions.includes(t.division))
+        .filter(t => t.club) // filter out the Byes
+        .map(t => {
+          return {
+            label: `${t.club} ${t.team} [${t.division}]`,
+            value: t.team_id
+          }
+          })
+        .sort((a, b) => {
+          console.log(a.label, b.label)
+          return (a.label > b.label) ? 1 : -1
+        })
+        
     },
     listGames() {
       return this.games
