@@ -8,7 +8,7 @@
         Division {{ game.division }}
       </div>
     </div>
-    <div class="lineup flex flex-row justify-around">
+    <div class="lineup flex flex-row justify-around p-2">
       <div
         class="homeTeam p-4 relative"
       >
@@ -38,7 +38,7 @@
         />
         <div class="text-overlay">
           <span class="text-base">
-            {{ away.club }}
+            {{ away.club!=="Bye" ? away.club : "" }}
           </span>
           <br>
           <span class="text-2xl">
@@ -51,11 +51,14 @@
       <div class="time mt-auto">
         {{ game.day }} {{ game.time }}
       </div>
-      <div class="diamond absolute bottom-0 right-0 m-4 border-2 w-10 h-10 text-center bg-green-800">
-        <div class="text text-center text-2xl text-white">
-          {{ game.diamond }}
+      <a :href="clubHome.venue">
+        <div class="diamond absolute bottom-0 right-0 m-4 border-2 w-10 h-10 text-center bg-green-800">
+          <div class="text text-center text-2xl text-white">
+            <!-- don't show bye -->
+            {{ game.diamond !== 0 ? game.diamond : "" }} 
+          </div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </template>

@@ -1,5 +1,19 @@
 [
   {
+    "name": "clubs",
+    "path": "/clubs",
+    "component": "/home/jcrosby/projects/wbc-tb-fixtures/pages/clubs.vue",
+    "chunkName": "pages/clubs",
+    "_name": "_358140e8"
+  },
+  {
+    "name": "todo",
+    "path": "/todo",
+    "component": "/home/jcrosby/projects/wbc-tb-fixtures/pages/todo.vue",
+    "chunkName": "pages/todo",
+    "_name": "_2d91cc07"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "/home/jcrosby/projects/wbc-tb-fixtures/pages/index.vue",

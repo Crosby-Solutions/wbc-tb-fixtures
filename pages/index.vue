@@ -4,50 +4,8 @@
     <h1 class="text-xl">
       WBC Tee-ball 2021-22 Fixtures
     </h1>
-    <h2 class="text-lg pt-4">
-      ToDo List:
-    </h2>
-    <ul>
-      <li>[x] Build content system</li>
-      <li>[x] Deploy to Nelify</li>
-      <li>[x] Set up access to admin</li>
-      <li>[2/5] Input content</li>
-      <li>[ ] Build display</li>
-      <li>[x] Hook up content query</li>
-      <li>[ ] Build Filter UI</li>
-      <li>[ ] Hook filters into the query</li>
-      <li>[ ] Persist filters to local storage</li>
-    </ul>
-    <h2 class="text-lg pt-4">
-      Stretch functionality - TBD
-    </h2>
-    <ul>
-      <li>[ ] Team Pages</li>
-      <li>[ ] Manager contact info</li>
-      <li>[ ] Venue maps</li>
-      <li>[ ] Diamond Overlays</li>
-    </ul>
-    <Club
-      v-for="club in clubs"
-      :key="club.slug"
-      :club="club"
-    />
-    <!-- <p>
-      Divisions: {{ divisions.map(d => d.division) }}
-    </p>
-    <p>
-      Teams:
-    </p>
-    <ul>
-      <li
-        v-for="team in teams.map(t => t.slug)"
-        :key="team"
-      >
-        {{ team }}
-      </li>
-    </ul>
-    <p>Rounds (Sorted): {{ roundsSorted.map(r => "Division " + r.division + " Round " + r.round + " ("+ r.date + ")") }}</p> -->
-    <p>Games: </p>
+
+    <h2>Filter Options:</h2>
     <div class="selections flex flex-row w-full justify-evenly">
       <div class="select-rounds">
         <p>Select Rounds</p>
@@ -117,7 +75,7 @@
         <br>
         <button @click="selectTeams('Willetton')">
           All Willetton Teams
-        </button>
+        </button><br>
         NOT YET IMPLEMENTED
         <button @click="selectRounds('All')">
           All Games At Willetton
@@ -125,11 +83,41 @@
         <!-- <p>Selected Teams: {{ selectedTeams }}</p> -->
       </div>
     </div>
+
+    <h2>Games: </h2>
+    <p v-if="!listGames.length">
+      No games are selected. Please adjust the filters above.
+    </p>
+    <div 
+      v-else
+      class="select flex flex-row justify-start"
+    >
+      Display as: 
+      <div
+        v-for="option in displayOptions"
+        :key="option.value"
+        class="selection"
+      >
+        <label
+          :for="option.value"
+          class="p-4"
+        >
+          <input
+            :id="option.value"
+            v-model="displayAs"
+            :value="option.value"
+            name="displayAs"
+            type="radio"
+          >
+          {{ option.display }}
+        </label>
+      </div>
+    </div>
+    <!-- display as cards -->
     <div
-      v-if="selectedDivisions.length"
-      class="selectTeams"
-    />
-    <div class="gamelist flex flex-row flex-wrap w-full">
+      v-if="displayAs === 'cards'"
+      class="gamelist flex flex-row flex-wrap w-full"
+    >
       <Game
         v-for="game in listGames"
         :key="game.slug"
@@ -140,15 +128,46 @@
         :club-away="getClubFromTeamID(game.teamAway)"
       />
     </div>
+    <!-- display as table -->
+    <div
+      v-else
+      class="table-container"
+    >
+      <table class="w-full">
+        <thead>
+          <tr>
+            <th
+              v-for="head in tableHeadings"
+              :key="head"
+            >
+              {{ head }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="game in listGames"
+            :key="game.game_id"
+          >
+            <td>{{ game.round }}</td>
+            <td>{{ game.division }}</td>
+            <td>{{ getDateFromRound(game.round) }}</td>
+            <td>{{ game.day }}</td>
+            <td>{{ game.time }}</td>
+            <td>{{ getTeamFromID(game.teamHome).club }} {{ getTeamFromID(game.teamHome).team }}</td>
+            <td>{{ getTeamFromID(game.teamAway).club }} {{ getTeamFromID(game.teamAway).team }}</td>
+            <td>{{ game.diamond }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
-import Club from "@/components/club.vue"
 import Game from "@/components/game.vue"
 export default {
   components: {
-    Club,
     Game
   },
    async asyncData({ $content }) {
@@ -185,7 +204,10 @@ export default {
     return {
       selectedRounds: [],
       selectedDivisions: ["U8", "U9", "U10", "U11", "U12"],
-      selectedTeams: []
+      selectedTeams: [],
+      displayAs: 'cards',
+      displayOptions: [{ display: 'Cards', value: 'cards'}, {display: 'Table', value: 'table'}],
+      tableHeadings: ['Round', 'Division', 'Date', 'Day', 'Time', 'Home', 'Away', 'Diamond']
     }
   },
   computed: {
@@ -194,7 +216,7 @@ export default {
         .filter(r => r.division == "U8") // just use one set of rounds
         .map(r => {
           return {
-            label: r.round + "-" + r.division,
+            label: r.round,
             value: r.round
           }
         })
@@ -210,7 +232,7 @@ export default {
     listTeams() {
       return [...this.teams]
         .filter(t => this.selectedDivisions.includes(t.division))
-        .filter(t => t.club) // filter out the Byes
+        .filter(t => t.club!=='Bye') // filter out the Byes
         .map(t => {
           return {
             label: `${t.club} ${t.team} [${t.division}]`,
@@ -243,14 +265,21 @@ export default {
     }
   },
   methods: {
+    getDateFromRound(round) {
+      const date = new Date(this.rounds.find(r => r.round === round).date)
+      console.log('date: ', date)
+      return date.getDate() + "-" + (+date.getMonth()+1) + "-" + date.getFullYear()
+    },
     getTeamFromID(id) {
       return this.teams.find(t => t.team_id === id)
     },
     getClubFromTeamID(id) {
       const club = this.teams.find(t => t.team_id === id).club
       const clubObj = this.clubs.find(c => c.club === club)
-      console.log('clubObj: ', clubObj)
       return clubObj
+    },
+    getRoundFromRound(round) {
+      return this.rounds.find(r => r.round === round)
     },
     selectTeams(input) {
       // for selecting all teams by club
@@ -299,5 +328,19 @@ export default {
   }
   #roundSelect {
     width: 200px;
+  }
+
+  th, td {
+    text-align: left;
+  }
+  th:nth-of-type(1), td:nth-of-type(1),
+  th:nth-of-type(2), td:nth-of-type(2),
+  th:last-of-type, td:last-of-type {
+    text-align: center;
+  }
+  
+  th:nth-of-type(5), td:nth-of-type(6),
+  th:nth-of-type(5), td:nth-of-type(6) {
+    width: 300px
   }
 </style>
