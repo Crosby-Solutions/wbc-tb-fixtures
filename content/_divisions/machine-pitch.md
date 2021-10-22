@@ -1,5 +1,5 @@
 ---
-division: Machine Pitch - Central Swan Hills
+division: MP
 sport: Machine Pitch
 age: 13
 ---
