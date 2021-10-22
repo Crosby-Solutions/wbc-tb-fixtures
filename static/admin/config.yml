@@ -12,7 +12,6 @@ collections:
     folder: "content/_divisions/"
     create: true
     identifier_field: division
-    filter: { field: "sport", value: "Teeball" }
     summary: "{{division}} {{sport}}"
     fields:
       - { label: "Division", name: "division", widget: "string" }
@@ -58,7 +57,6 @@ collections:
     slug: "{{division}}-{{division_number}}-{{club}}-{{slug}}"
     identifier_field: team
     summary: "{{division}} [{{division_number}}] {{club}} {{team}}"
-    filter: { field: "sport", value: "Teeball" }
     sortable_fields: ["division", "division_number"]
     view_groups:
       - label: Division
